@@ -4,8 +4,7 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "nodemon .",
-    "dev": "tsc -w & nodemon .",
-    "push": "cp package.json package-lock.json .env dist/ && rsync -avz ./ --exclude-from='.rsyncignore' root@46.202.141.240:/projects/rn-gql/be"
+    "dev": "tsc -w & nodemon ."
   },
   "_moduleAliases": {
     "@resolvers": "dist/resolvers",
