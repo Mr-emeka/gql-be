@@ -1,0 +1,50 @@
+{
+  "name": "rn-gql-server",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "nodemon .",
+    "dev": "tsc -w & nodemon .",
+    "push": "cp package.json package-lock.json .env dist/ && rsync -avz ./ --exclude-from='.rsyncignore' root@46.202.141.240:/projects/rn-gql/be"
+  },
+  "_moduleAliases": {
+    "@resolvers": "dist/resolvers",
+    "@schemas": "dist/schemas",
+    "@helpers": "dist/helpers",
+    "@middlewares": "dist/middlewares",
+    "@services": "dist/services",
+    "@interfaces": "dist/interfaces",
+    "@utils": "dist/utils",
+    "@models": "dist/models",
+    "@config": "dist/config",
+    "@misc": "dist/misc",
+    "@data": "dist/data"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/body-parser": "^1.19.5",
+    "@types/lodash": "^4.17.14",
+    "@types/uuid": "^10.0.0"
+  },
+  "dependencies": {
+    "apollo-server": "^3.13.0",
+    "apollo-server-express": "^3.13.0",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.7",
+    "express-rate-limit": "^7.5.0",
+    "handlebars": "^4.7.8",
+    "joi": "^17.13.3",
+    "lodash": "^4.17.21",
+    "module-alias": "^2.2.3",
+    "mongoose": "^8.9.3",
+    "morgan": "^1.10.0",
+    "node-device-detector": "^2.1.6",
+    "nodemon": "^3.1.9",
+    "typescript": "^5.7.2",
+    "uuid": "^11.0.4"
+  }
+}
