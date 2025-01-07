@@ -5,16 +5,46 @@ import { ObjectId } from "mongodb";
 const StudentResolvers = {
   Query: {
     getStudent: async (_: any, { id }: { id: string }) => {
+      const studentId = new ObjectId(id);
       return repository.findRecordBy<Student>("student", {
-        query: { _id: id },
+        query: { _id: studentId },
       });
     },
     getAllStudents: async () => {
-      return repository.findRecordsBy<Student>("student", {});
+      const students = await repository.aggregate<Student>("student", [
+        {
+          $lookup: {
+            from: "hobbies",
+            localField: "_id",
+            foreignField: "student_id",
+            as: "hobbies",
+          },
+        },
+        {
+          $unwind: {
+            path: "$hobbies",
+            preserveNullAndEmptyArrays: true,
+          },
+        },
+        {
+          $group: {
+            _id: "$_id",
+            firstName: { $first: "$firstName" },
+            email: { $first: "$email" },
+            hobbies: { $push: "$hobbies" },
+          },
+        },
+        {
+          $sort: { createdAt: 1 }
+        }
+      ]);
+
+      return students;
     },
-    getHobbies: async (_: any, { id }: { id: string }) => {
-      return repository.findRecordBy<Hobbies>("hobbies", {
-        query: { _id: id },
+    getUserHobbies: async (_: any, { id }: { id: string }) => {
+      const studentId = new ObjectId(id);
+      return repository.findRecordsBy<Hobbies>("hobbies", {
+        query: { student_id: studentId },
       });
     },
   },
@@ -23,7 +53,6 @@ const StudentResolvers = {
       _: any,
       { firstName, email }: { firstName: string; email: string }
     ) => {
-    
       const student = await repository.findRecordBy<Student>("student", {
         query: { email },
       });
@@ -41,16 +70,6 @@ const StudentResolvers = {
         title,
         student_id: id as any,
       });
-    },
-  },
-  Student: {
-    async hobbies() {
-      return repository.findRecordsBy<Hobbies>("hobbies", {});
-    },
-  },
-  Hobbies: {
-    async student() {
-      return repository.findRecordsBy<Student>("student", {});
     },
   },
 };

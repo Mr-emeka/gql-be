@@ -2,14 +2,14 @@ import { gql } from "apollo-server";
 
 const StudentSchema = gql`
   type Student {
-    id: String!
+    _id: String!
     firstName: String!
     email: String!
     hobbies: [Hobbies!]!
   }
 
   type Hobbies {
-    id: String!
+    _id: String!
     title: String!
     student: Student!
   }
@@ -17,7 +17,7 @@ const StudentSchema = gql`
   type Query {
     getStudent(id: String!): Student
     getAllStudents: [Student!]!
-    getHobbies(id: String!): Hobbies
+    getUserHobbies(id: String!): [Hobbies!]!
   }
 
   type Mutation {
