@@ -15,6 +15,8 @@ This project serves as a template for creating GraphQL APIs using Node.js. It pr
 
 - Start the development server with `npm run dev`.
 - Access the GraphQL playground at **http://localhost:${port}/graphql**.
+- Test Playground [https://api.ukpai.site/graphql](https://api.ukpai.site/graphql). I have gone through the stress of setting it up on a vps server.
+ 
 
 ## Troubleshooting
 
